@@ -1,5 +1,7 @@
 # GIS
 
+Oryginalny kod: https://github.com/CaoManhDat/TSP-TabuSearch
+
 Struktura pliku:
 
 5 // liczba wierzchołków / miast
