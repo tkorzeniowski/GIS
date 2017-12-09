@@ -1,0 +1,252 @@
+\documentclass[11pt,a4paper,twoside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+
+
+
+\usepackage{graphicx}
+\usepackage{subcaption} % obrazki obok siebie
+%\usepackage[caption=false]{subfig} % obrazki nad sobą
+\usepackage{wrapfig} 
+\usepackage{float}
+\usepackage{geometry}
+%\geometry{lmargin=3cm,rmargin=2cm, tmargin=2.5cm, bmargin=2.5cm} %marginesy w pracy inż/mgr
+\geometry{lmargin=2.5cm,rmargin=2.5cm, tmargin=2.5cm, bmargin=2.5cm} %marginesy ogólne
+\usepackage{multirow} % scalanie wierszy tabeli
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{} % wszystkie nagłówki puste
+%\fancyhead[RE,LO]{ Absolwenci Wydziału Prawa  2012}
+\fancyfoot{} % wszystkie stopki puste
+\fancyfoot[LE,RO]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+%\renewcommand{\footrulewidth}{0.4pt}
+
+\usepackage{hyperref}% nazwy odsyłaczy
+
+%unikanie myślników dzielących słowa między liniami
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
+
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\makeatletter
+\renewcommand{\ALG@name}{Algorytm}
+\renewcommand{\figurename}{Wykres}
+
+\usepackage{enumitem}
+\setitemize{itemsep=2pt,topsep=2pt,parsep=2pt,partopsep=2pt} %odstępy wyliczanych elementów (-)
+
+\usepackage{indentfirst} % wcięcie w pierwszym akapicie (pod)rozdziału
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% formatowanie kodu R
+\usepackage{listings} 
+\usepackage{color}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\lstset{
+language=R,
+basicstyle=\footnotesize\ttfamily,%\scriptsize\ttfamily,
+commentstyle=\ttfamily\color{gray},
+numbers=left,
+numberstyle=\ttfamily\color{gray}\footnotesize,
+stepnumber=0, % numeracja linii
+numbersep=5pt,
+backgroundcolor=\color{white},
+showspaces=false,
+showstringspaces=false,
+showtabs=false,
+frame=none, % obramowanie kodu
+tabsize=2,
+captionpos=b,
+breaklines=true,
+breakatwhitespace=false,
+title=\lstname,
+escapeinside={},
+keywordstyle={},
+morekeywords={}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% zawijanie tekstu w tabelach zgodnie z życzeniem
+\usepackage{stackengine}
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\setstackEOL{\#}
+\setstackgap{L}{12pt}
+%%%
+
+\usepackage{amsfonts} % zbiory liczba (np. naturalnych)
+\usepackage{amsmath} %duże klamry
+\usepackage{bbm} %skok jednostkowy
+\usepackage[titletoc,title]{appendix} % dodatki - zmiana wyświetlania nagłówka
+\pagenumbering{gobble}
+\usepackage{afterpage} % pusta strona
+\usepackage{tabularx}
+
+%\usepackage{setspace} % interlinia
+%\singlespacing 
+%\onehalfspacing
+%\doublespacing
+%\setstretch{0.96}
+
+\begin{document}
+
+\begin{center}
+\vspace*{3\baselineskip}
+{\LARGE{GIS Projekt}}
+\\
+\vspace*{1\baselineskip}
+{\large{Problem komiwojażera w obecności ulic jednokierunkowych.}}
+\\
+\vspace*{1\baselineskip}
+Tomasz Korzeniowski, 265753\\
+Jacek Sochacki, 259741
+\\
+\vspace*{1\baselineskip}
+\today
+\end{center}
+\section{Zadanie}
+Należy zaimplementować (nietrywialny) algorytm rozwiązujący problem komiwojażera, a następnie zbadać, czy można modelować ulice jednokierunkowe w ten sposób, że połączeniu w kierunku A$\rightarrow$B (A, B - wybrane miasta) nadaje się wagę równą odległości miedzy miastami, a połączeniu B$\rightarrow$A nadaje się wagę o bardzo dużej wartości. Głównym celem zadania jest identyfikacja warunków, w których algorytm wskazuje drogę „pod prąd” pomimo istnienia drogi „legalnej”.
+\section{Opis zadania}
+\subsection{Problem komiwojażera}
+Problem komiwojażera można przedstawić następująco. Rozważmy graf $G=(V, E)$, gdzie $V$ to zbiór $n$ miast, które mają zostać odwiedzone przez komiwojażera, natomiast $E$ to zbiór możliwych połączeń między tymi miastami. W ogólności rozważamy graf pełny. Potrzebujemy wyznaczyć macierz kosztów przejść między miastami, czyli wagi krawędzi $c_{ij}$ między miastem $i$ oraz $j$. Do zaznaczenia, którymi krawędziami przejedzie komiwojażer wykorzystamy zmienną binarną $x_{ij}$
+$$x_{ij} = 
+	\begin{cases} 
+      1, & \text{gdy komiwojażer przejeżdża z miasta i do j} \\
+      0, & \text{w przeciwnym przypaku}\\
+   \end{cases}
+$$
+
+Wiadomo, że każe miasto musi być odwiedzone dokładnie raz, a także koniec podróży komiwojażera musi być w mieście z którego ją rozpoczął. Sprowadza się to do znalezienia drogi w grafie $G$, której pierwszy i ostatni wierzchołek są tożsame, a także koszt przejazdu wyznaczoną drogą jest jak najmniejszy. 
+
+Powyższe zadanie można opisać następującym modelem
+
+\begin{equation}
+\min \sum_{i,j \in V} c_{ij} x_{ij} 
+\label{f_celu}
+\end{equation}
+\begin{equation}
+\sum_{j \in V} x_{ij}=1, \quad i \in V \backslash \{j\} 
+\end{equation}
+\begin{equation}
+\sum_{i \in V} x_{ij}=1, \quad j \in V \backslash \{i\} 
+\end{equation}
+\begin{equation}
+x_{ij} \in \{0,1\}
+\end{equation}
+\begin{equation}
+x \text{ jest drogą w grafie G}
+\end{equation}
+
+Zauważmy, że model znajduje drogę, a nie cykl. Nie jest to jednak przeszkodą, jeśli założymy, że znalezioną drogę zamkniemy w cykl przez dodanie krawędzi między pierwszym i ostatnim wierzchołkiem.
+
+Tak przedstawione zadanie rozwiązuje problem komiwojażera dla grafu nieskierowanego. Należy jednak rozważyć możliwe połączenia jednokierunkowe między dowolnymi miastami \mbox{$A$ i $B$}, zatem musimy rozważać graf skierowany. Struktura problemu i przyjęty model nie musi być zmieniany. Gwarantuje nam to odpowiednia konstrukcja macierzy kosztów $C = [c_{ij}]_{n\times n}$. W przeciwieństwie do grafu nieskierowanego nie będzie ona symetryczna. Zatem otrzymujemy graf skierowany gdzie ulice jednokierunkowe będą reprezentowane przez krawędzie o nieskończonym koszcie. 
+
+W ramach zadania sprawdzimy czy powyższe modelowanie ulic jednokierunkowych jest wystarczające do znalezienia optymalnego rozwiązania problemu komiwojażera. Spróbujemy wskazać warunki w jakich algorytm znajduje błędne rozwiązania (ulice „pod prąd”).
+
+\subsection{Przeszukiwanie tabu}
+Wybranym sposobem rozwiązania problemu będzie algorytm przeszukiwania tabu. Jest to metaheurystyka stosowana do rozwiązywania problemów optymalizacyjnych. Polega na  wykonaniu ciągu kolejnych ruchów w celu przeszukiwania przestrzeni rozwiązań dopuszczalnych zadania. 
+
+Przeszukiwanie tabu rozpoczyna się w pewnym rozwiązaniu początkowym. W każdej iteracji znajdowane jest rozwiązanie lokalnie najlepsze, a także poszukiwani są sąsiedzi (w zbiorze rozwiązań dopuszczalnych) takiego rozwiązania. Najlepszy ze znalezionych sąsiadów staje się nowym rozwiązaniem lokalnym dla kolejnej iteracji. Najlepszy z sąsiadów charakteryzuje się mniejszą wartością funkcji celu (\ref{f_celu}) od obecnego rozwiązania.
+
+Na początku działania algorytmu potrzebne jest pewne wstępne rozwiązanie. W naszym przypadku wystarczy przyjąć dowolny ciąg wierzchołków (miast). Rozważamy grafy pełne, więc wybór ulicy jednokierunkowej nie jest przeszkodą. Krawędzie które „nie istnieją” (nie ma połączenia między danymi miastami) lub są to ulice jednokierunkowe mają po prostu koszt nieskończony. Ze względu na trudności w implementacji nieskończoności ograniczymy się do dostatecznie dużej wartości takiej krawędzi.
+
+Poszukiwanie sąsiada obecnego rozwiązania wykorzystuje technikę „2-opt move”. Polega ona na zamianie dwóch wierzchołków w poszukiwanej drodze, które nie sąsiadują. Zmiana ta powoduje usunięcie dwóch krawędzi z oryginalnej drogi, zamianie wierzchołków i ponowne połączenie przestawionych wierzchołków w drogę. Dla przykładu rozważmy drogę o następujących wierzchołkach $v$
+
+\bgroup
+\def\arraystretch{1.5}
+\begin{tabular}{cccccccccccc}
+%\hline
+Przed zmianą: & $\cdots$ & $v_{i-1}$ & $v_{i}$ & $\mathbf{v_{i+1}}$ & $v_{i+2}$ & $\cdots$ & $v_{j-1}$ & $\mathbf{v_{j}}$ & $v_{j+1}$ & $v_{i+2}$ & $\cdots$\\
+Po zmianie: & $\cdots$ & $v_{i-1}$ & $v_{i}$ & $\mathbf{v_{j}}$ & $v_{i+2}$ & $\cdots$ & $v_{j-1}$ & $\mathbf{v_{i+1}}$ & $v_{j+1}$ & $v_{i+2}$ & $\cdots$\\
+\end{tabular}
+\egroup
+
+Zostały usunięte krawędzie między wierzchołkami $(v_{i}, v_{i+1})$ oraz $(v_{j}, v_{j+1})$, lecz powstały dwie nowe krawędzie $(v_{i}, v_{j})$ oraz $(v_{i+1}, v_{j+1})$. Dla reszty krawędzi pozostała droga przed zmianą, a dla niektórych z nich zmienił się kierunek ich przechodzenia w nowo wyznaczonej drodze.
+
+Ze względu na skierowanie grafu naszego zadania, technika „2-opt move” zostanie zachowana, lecz zamiast dwóch krawędzi, zostaną zmienione cztery. Przyjmując zamianę wierzchołków jak w powyższym przykładzie, zostaną usunięte krawędzie $(v_{i}, v_{i+1})$, $(v_{j}, v_{j+1})$ jak poprzednio oraz dodatkowo $(v_{i+1}, v_{i+2})$ i $(v_{j-1}, v_{j})$. Zamiast nich powstaną krawędzie $(v_{i}, v_{j})$, $(v_{i+1}, v_{j+1})$ jak wcześniej oraz nowe $(v_{j}, v_{j+2})$ oraz $(v_{j-1}, v_{i+1})$. Graficznie zamianę tę przedstawia wykres \ref{2optMove}.
+
+\begin{figure}[ht]
+\vspace{-20pt}
+\centering
+\includegraphics[width=15cm]{2optMove}
+\caption{Zamiana wierzchołków $v_{i+1}$ oraz $v_{j}$ zgodnie w 2-opt move dla grafu skierowanego.}
+\label{2optMove}
+\end{figure}
+
+Taki sposób zamiany niesąsiadujących wierzchołków umożliwia znalezienie wszystkich sąsiadów obecnego rozwiązania. Wystarczy, że sprawdzimy każdą parę wierzchołków, nawet tych sąsiadujących (graf skierowany). Sąsiad o najmniejszej wartości funkcji celu stanie się wtedy bieżącym rozwiązaniem. Do obliczenia wartości funkcji celu wystarczy przejść nowo wyznaczonym cyklem, sumując wagi kolejnych krawędzi.
+
+Przeszukiwanie tabu bierze swoją nazwę z ruchów tabu. Jest to sposób zaznaczania, które wierzchołki zostały zamienione. Na listę tabu wpisujemy liczbę iteracji algorytmu, przez którą ponowna zamiana tychże wierzchołków staje się zakazana (tabu). Dodatkowo rozpatrujemy analogiczną listę częstości zmian krawędzi. \textbf{(DALEJ NIE WIEM DO CZEGO TO JEST POTRZEBNE...)}
+
+Schemat działania przeszukiwania tabu przestawia algorytm \ref{tabuSearchAlg}.
+
+\begin{algorithm}[ht]
+\caption{Przeszukiwanie tabu}
+\label{tabuSearchAlg}
+\begin{algorithmic}%[1]
+\Require $C$
+	\State $tries$ $\leftarrow$ 0
+	\While{$tries$ $\neq$ MAX-TRIES}
+		\State wygeneruj drogę początkową $v$
+		\State $count$ $\leftarrow$ 0
+		\While{$count$ $\neq$ MAX-ITER}
+			\State znajdź sąsiadów $v$ i wybierz najlepszego z nich
+			\State zamień odpowiednie wierzchołki
+			\State uaktualnij listę tabu
+			\If{nowa droga jest lepsza przy danej wartości $tries$}
+				\State uaktualnij informację o lokalnej najlepszej drodze
+				\State ++$count$
+				\If{bieżąca droga jest najlepsza dla wszystkich $tries$}
+					\State uaktualnij informację o globalnej najlepszej drodze
+					
+    			\EndIf
+    		\EndIf
+		\EndWhile
+		\State ++$tries$
+	\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{(... dywagacje na temat czasu pobytu na liście tabu, umożliwienie ruchu mimo że jest tabu, ...)}
+
+\section{Implementacja algorytmu}
+Implementacja przeszukiwania tabu zostanie wykonana w języku C++.
+\subsection{Struktury danych}
+Do wyznaczenia rozwiązania problemu komiwojażera będziemy potrzebowali
+\bgroup
+\def\arraystretch{1.5}
+\begin{tabularx}{\textwidth}{l|X}
+%\hline
+$C = [c_{ij}]_{n\times n}$ & Macierz kosztów przejść między $n$ miastami. Zakładamy, że graf jest pełny, a ulice kierunkowe przyjmują wartość wystarczająco dużą, żeby uznać ją za nieskończoność (np. 1e38). Reprezentacją takiej macierzy będzie tablica dwuwymiarowa (tablica tablic) typu zmiennoprzecinkowego podwójnej precyzji (double).\\
+$v$ & Wektor reprezentujący drogę komiwojażera. Zawiera indeksy kolejnych odwiedzonych miast, zatem będzie typu całkowitoliczbowego. \\
+$LT = [lt_{ij}]_{n\times n}$ & Lista tabu - macierz zakazanych przejść. Element $lt_{ij}$ przechowuje informację o liczbie iteracji przez które zamiana miast $i$ oraz $j$ jest zakazana. Typ całkowitoliczbowy.\\
+$LTF = [ltf_{ij}]_{n\times n}$ & co dokładnie to robi? Typ całkowitoliczbowy. \\
+ & piszemy coś o define-ach?\\
+ & Iteratory, zmienna przechowująca wartość funkcji celu\\
+\end{tabularx}
+\egroup
+\subsection{Projekty testów}
+W ramach testów należy sprawdzić poprawność działania algorytmu. W tym celu zostaną wykorzystane dane (macierz kosztów przejść $C$) dla których znana jest wartość najtańszej drogi komiwojażera. Liczność miast w tych danych będzie rzędu kilkunastu.
+
+Po potwierdzeniu poprawności wyznaczanego rozwiązania dane te zostaną uzupełnione o ulice jednokierunkowe tak, by wartości najtańszych dróg pozostały niezmienne. Algorytm powinien wyznaczać takie same rozwiązania jak w poprzednich testach.
+
+Następnym krokiem będzie wygenerowanie macierzy kosztów $C$ wraz z losowymi ulicami jednokierunkowymi. Wagi krawędzi zostaną dostosowane tak, by zapewnić istnienie cyklu w grafie. Liczba ulic jednokierunkowych będzie się zmieniać tak samo jak liczba miast dla których będą generowane dane. Pozwoli to zbadać zadania dużej skali (ok. 1000 wierzchołków). Wprowadzana liczba ulic jednokierunkowych będzie pewnym przyjętym procentem wszystkich ulic istniejących w grafie.
+
+Liczba testów każdego rodzaju będzie rzędu kilkunastu dla każdego z przyjętych zestawów danych jak i liczby ulic jednokierunkowych.
+\subsection{Założenia programu}
+??? że ma działać ???
+
+\newpage
+ 
+%\newpage
+\begin{thebibliography}{9}
+\addcontentsline{toc}{section}{Literatura}
+\bibitem{BOCD}
+Z. Michalewicz, D. B. Fogel
+\emph{Jak to rozwiązać czyli nowoczesna heurystyka}.
+WNT, Warszawa 2006
+\end{thebibliography}
+\end{document}
