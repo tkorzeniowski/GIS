@@ -141,7 +141,7 @@ x_{ij} \in \{0,1\}
 x \text{ jest drogą w grafie G}
 \end{equation}
 
-Zauważmy, że model znajduje drogę, a nie cykl. Nie jest to jednak przeszkodą, jeśli założymy, że znalezioną drogę zamkniemy w cykl przez dodanie krawędzi między pierwszym i ostatnim wierzchołkiem.
+%Zauważmy, że model znajduje drogę, a nie cykl. Nie jest to jednak przeszkodą, jeśli założymy, że znalezioną drogę zamkniemy w cykl przez dodanie krawędzi między pierwszym i ostatnim wierzchołkiem.
 
 Tak przedstawione zadanie rozwiązuje problem komiwojażera dla grafu pełnego. Zadanie jednak nie jest jedynie problemem komiwojażera. Należy rozważyć połączenia jednokierunkowe między dowolnymi miastami \mbox{$A$ i $B$}, zatem musimy rozważać graf skierowany. Struktura problemu i przyjęty model nie musi być zmieniany. Gwarantuje nam to odpowiednia konstrukcja macierzy kosztów $C = [c_{ij}]_{n\times n}$. W przeciwieństwie do grafu nieskierowanego nie będzie ona symetryczna. Zatem otrzymujemy graf skierowany gdzie ulice jednokierunkowe będą reprezentowane przez krawędzie o nieskończonym koszcie. 
 
@@ -170,7 +170,7 @@ Zostały usunięte krawędzie między wierzchołkami $(v_{i}, v_{i+1})$ oraz $(v
 Ze względu na skierowanie grafu naszego zadania, technika „2-opt move” zostanie zachowana, lecz zamiast dwóch krawędzi, zostaną zmienione cztery. Przyjmując zamianę wierzchołków jak w powyższym przykładzie, zostaną usunięte krawędzie $(v_{i}, v_{i+1})$, $(v_{j}, v_{j+1})$ jak poprzednio oraz dodatkowo $(v_{i+1}, v_{i+2})$ i $(v_{j-1}, v_{j})$. Zamiast nich powstaną krawędzie $(v_{i}, v_{j})$, $(v_{i+1}, v_{j+1})$ jak wcześniej oraz nowe $(v_{j}, v_{j+2})$ oraz $(v_{j-1}, v_{i+1})$. Graficznie zamianę tę przedstawia wykres \ref{2optMove}.
 
 \begin{figure}[ht]
-\vspace{-20pt}
+\vspace{-10pt}
 \centering
 \includegraphics[width=15cm]{2optMove}
 \caption{Zamiana wierzchołków $v_{i+1}$ oraz $v_{j}$ zgodnie w 2-opt move dla grafu skierowanego.}
@@ -219,8 +219,9 @@ Schemat działania przeszukiwania tabu przestawia algorytm \ref{tabuSearchAlg}.
 \end{algorithmic}
 \end{algorithm}
 
+Licznik $tries$ odpowiada za liczbę prób poszukiwania rozwiązania. W ramach każdej próby zostanie wykonanych $iter$ poszukiwań sąsiada i aktualizacji listy tabu. Jeśli jednak przez $count$ iteracji algorytmu rozwiązanie nie poprawi się względem dotychczas najlepszego znalezionego, nie ma sensu dalej poszukiwać. Może to wynikać z osiągnięcia minimum lokalnego w przestrzeni rozwiązań dopuszczalnych.
 
-\textbf{(... dywagacje na temat czasu pobytu na liście tabu, domyślnych wartości liczby iteracji...)}
+\textbf{(... dywagacje na temat czasu pobytu na liście tabu???,)}
 
 \section{Implementacja algorytmu}
 

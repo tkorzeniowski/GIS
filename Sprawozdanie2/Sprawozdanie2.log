@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.11.6)  14 DEC 2017 22:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.11.6)  14 DEC 2017 22:13
 entering extended mode
 **./Sprawozdanie2.tex
 (Sprawozdanie2.tex
@@ -989,34 +989,34 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.182 P
-       rzeszukiwanie tabu bierze swoją nazwę z ruchów tabu. Jest to spos�...
+l.184 M
+       oże się zdarzyć, że jeden z rozważanych sąsiadów objętych tab...
 [2]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 189.
 
-Underfull \vbox (badness 5607) has occurred while \output is active []
+Underfull \vbox (badness 2005) has occurred while \output is active []
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.240 \subsection
+l.241 \subsection
                  {Projekty testów} [3 <./2optMove.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 263.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 264.
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.263 \end{document}
+l.264 \end{document}
                      [4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 263.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 264.
  (Sprawozdanie2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 263.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 263.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 264.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 264.
 Package rerunfilecheck Info: File `Sprawozdanie2.out' has not changed.
 (rerunfilecheck)             Checksum: 015B6B34929C1AB9706E4B244BFFF10B;541.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 263.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 264.
  ) 
 Here is how much of TeX's memory you used:
  11275 strings out of 493323
@@ -1040,7 +1040,7 @@ r17.pfb><D:/Programy/LaTeX/MiKTeX/fonts/type1/public/pl/plr8.pfb><D:/Programy/L
 aTeX/MiKTeX/fonts/type1/public/pl/plsy10.pfb><D:/Programy/LaTeX/MiKTeX/fonts/ty
 pe1/public/pl/plsy8.pfb><D:/Programy/LaTeX/MiKTeX/fonts/type1/public/pl/plti10.
 pfb>
-Output written on Sprawozdanie2.pdf (4 pages, 118873 bytes).
+Output written on Sprawozdanie2.pdf (4 pages, 119146 bytes).
 PDF statistics:
  132 PDF objects out of 1000 (max. 8388607)
  19 named destinations out of 1000 (max. 500000)
