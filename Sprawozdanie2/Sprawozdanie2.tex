@@ -112,7 +112,7 @@ Jacek Sochacki, 259741
 Należy zaimplementować (nietrywialny) algorytm rozwiązujący problem komiwojażera, a następnie zbadać, czy można modelować ulice jednokierunkowe w ten sposób, że połączeniu w kierunku A$\rightarrow$B (A, B - wybrane miasta) nadaje się wagę równą odległości miedzy miastami, a połączeniu B$\rightarrow$A nadaje się wagę o bardzo dużej wartości. Głównym celem zadania jest identyfikacja warunków, w których algorytm wskazuje drogę „pod prąd” pomimo istnienia drogi „legalnej”.
 \section{Opis zadania}
 \subsection{Problem komiwojażera}
-Problem komiwojażera można przedstawić następująco. Rozważmy graf $G=(V, E)$, gdzie $V$ to zbiór $n$ miast, które mają zostać odwiedzone przez komiwojażera, natomiast $E$ to zbiór możliwych połączeń między tymi miastami. W ogólności rozważamy graf pełny. Potrzebujemy wyznaczyć macierz kosztów przejść między miastami, czyli wagi krawędzi $c_{ij}$ między miastem $i$ oraz $j$. Do zaznaczenia, którymi krawędziami przejedzie komiwojażer wykorzystamy zmienną binarną $x_{ij}$
+Problem komiwojażera można przedstawić następująco. Rozważmy graf $G=(V, E)$, gdzie $V$ to zbiór $n$ miast, które mają zostać odwiedzone przez komiwojażera, natomiast $E$ to zbiór możliwych połączeń między tymi miastami. W ogólności rozważamy graf pełny. Potrzebujemy wyznaczyć macierz kosztów przejść między miastami, czyli wagi krawędzi $c_{ij}$ między miastem $i$ oraz $j$. Do zaznaczenia, którymi krawędziami przejedzie komiwojażer wykorzystamy zmienne binarne $x_{ij}$
 $$x_{ij} = 
 	\begin{cases} 
       1, & \text{gdy komiwojażer przejeżdża z miasta i do j} \\
@@ -142,6 +142,8 @@ x \text{ jest drogą w grafie G}
 \end{equation}
 
 %Zauważmy, że model znajduje drogę, a nie cykl. Nie jest to jednak przeszkodą, jeśli założymy, że znalezioną drogę zamkniemy w cykl przez dodanie krawędzi między pierwszym i ostatnim wierzchołkiem.
+
+Zauważmy, że w macierzy $X = [x_{ij}]_{n\times n}$ w każdej kolumnie i każdym wierszu występuje dokładnie jedna jedynka. Zatem można reprezentować znaleziony cykl jako wektor kolejnych wierzchołków odwiedzanych przez komiwojażera. Wiemy, że każde miasto występuje w tym wektorze tylko raz, a cykl zamykany jest przez skrajne wierzchołki wektora.
 
 Tak przedstawione zadanie rozwiązuje problem komiwojażera dla grafu pełnego. Zadanie jednak nie jest jedynie problemem komiwojażera. Należy rozważyć połączenia jednokierunkowe między dowolnymi miastami \mbox{$A$ i $B$}, zatem musimy rozważać graf skierowany. Struktura problemu i przyjęty model nie musi być zmieniany. Gwarantuje nam to odpowiednia konstrukcja macierzy kosztów $C = [c_{ij}]_{n\times n}$. W przeciwieństwie do grafu nieskierowanego nie będzie ona symetryczna. Zatem otrzymujemy graf skierowany gdzie ulice jednokierunkowe będą reprezentowane przez krawędzie o nieskończonym koszcie. 
 
@@ -213,6 +215,7 @@ Schemat działania przeszukiwania tabu przestawia algorytm \ref{tabuSearchAlg}.
     		\If{$count =$ MAX-COUNT}
     			\State zbyt długo nie znaleziono lepszego rozwiązania - przerwij tę próbę
     		\EndIf
+    	\State ++$iter$
 		\EndWhile
 		\State ++$tries$
 	\EndWhile
