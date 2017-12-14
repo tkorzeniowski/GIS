@@ -120,7 +120,7 @@ $$x_{ij} =
    \end{cases}
 $$
 
-Wiadomo, że każe miasto musi być odwiedzone dokładnie raz, a także koniec podróży komiwojażera musi być w mieście z którego ją rozpoczął. Sprowadza się to do znalezienia drogi w grafie $G$, której pierwszy i ostatni wierzchołek są tożsame, a także koszt przejazdu wyznaczoną drogą jest jak najmniejszy. 
+Wiadomo, że każde miasto musi być odwiedzone dokładnie raz, z wyjątkiem miasta startowego, w którym komiwojażer zakończy swoją podróż. Sprowadza się to do znalezienia drogi w grafie $G$, której pierwszy i ostatni wierzchołek są tożsame, a koszt przejazdu wyznaczoną drogą jest jak najmniejszy. 
 
 Powyższe zadanie można opisać następującym modelem
 
@@ -143,18 +143,18 @@ x \text{ jest drogą w grafie G}
 
 Zauważmy, że model znajduje drogę, a nie cykl. Nie jest to jednak przeszkodą, jeśli założymy, że znalezioną drogę zamkniemy w cykl przez dodanie krawędzi między pierwszym i ostatnim wierzchołkiem.
 
-Tak przedstawione zadanie rozwiązuje problem komiwojażera dla grafu nieskierowanego. Należy jednak rozważyć możliwe połączenia jednokierunkowe między dowolnymi miastami \mbox{$A$ i $B$}, zatem musimy rozważać graf skierowany. Struktura problemu i przyjęty model nie musi być zmieniany. Gwarantuje nam to odpowiednia konstrukcja macierzy kosztów $C = [c_{ij}]_{n\times n}$. W przeciwieństwie do grafu nieskierowanego nie będzie ona symetryczna. Zatem otrzymujemy graf skierowany gdzie ulice jednokierunkowe będą reprezentowane przez krawędzie o nieskończonym koszcie. 
+Tak przedstawione zadanie rozwiązuje problem komiwojażera dla grafu pełnego. Zadanie jednak nie jest jedynie problemem komiwojażera. Należy rozważyć połączenia jednokierunkowe między dowolnymi miastami \mbox{$A$ i $B$}, zatem musimy rozważać graf skierowany. Struktura problemu i przyjęty model nie musi być zmieniany. Gwarantuje nam to odpowiednia konstrukcja macierzy kosztów $C = [c_{ij}]_{n\times n}$. W przeciwieństwie do grafu nieskierowanego nie będzie ona symetryczna. Zatem otrzymujemy graf skierowany gdzie ulice jednokierunkowe będą reprezentowane przez krawędzie o nieskończonym koszcie. 
 
-W ramach zadania sprawdzimy czy powyższe modelowanie ulic jednokierunkowych jest wystarczające do znalezienia optymalnego rozwiązania problemu komiwojażera. Spróbujemy wskazać warunki w jakich algorytm znajduje błędne rozwiązania (ulice „pod prąd”).
+W ramach zadania sprawdzimy czy powyższe modelowanie ulic jednokierunkowych jest wystarczające do znalezienia dopuszczalnego rozwiązania problemu komiwojażera. Spróbujemy wskazać warunki w jakich algorytm znajduje błędne rozwiązania (ulice „pod prąd”).
 
 \subsection{Przeszukiwanie tabu}
 Wybranym sposobem rozwiązania problemu będzie algorytm przeszukiwania tabu. Jest to metaheurystyka stosowana do rozwiązywania problemów optymalizacyjnych. Polega na  wykonaniu ciągu kolejnych ruchów w celu przeszukiwania przestrzeni rozwiązań dopuszczalnych zadania. 
 
-Przeszukiwanie tabu rozpoczyna się w pewnym rozwiązaniu początkowym. W każdej iteracji znajdowane jest rozwiązanie lokalnie najlepsze, a także poszukiwani są sąsiedzi (w zbiorze rozwiązań dopuszczalnych) takiego rozwiązania. Najlepszy ze znalezionych sąsiadów staje się nowym rozwiązaniem lokalnym dla kolejnej iteracji. Najlepszy z sąsiadów charakteryzuje się mniejszą wartością funkcji celu (\ref{f_celu}) od obecnego rozwiązania.
+Przeszukiwanie tabu rozpoczyna się wybraniem rozwiązania początkowego. W każdej iteracji znajdowane jest rozwiązanie lokalnie najlepsze, a także poszukiwani są sąsiedzi (w zbiorze rozwiązań dopuszczalnych) takiego rozwiązania. Najlepszy ze znalezionych sąsiadów staje się nowym rozwiązaniem lokalnym dla kolejnej iteracji. Najlepszy z sąsiadów charakteryzuje się mniejszą wartością funkcji celu (\ref{f_celu}) od obecnego rozwiązania.
 
 Na początku działania algorytmu potrzebne jest pewne wstępne rozwiązanie. W naszym przypadku wystarczy przyjąć dowolny ciąg wierzchołków (miast). Rozważamy grafy pełne, więc wybór ulicy jednokierunkowej nie jest przeszkodą. Krawędzie które „nie istnieją” (nie ma połączenia między danymi miastami) lub są to ulice jednokierunkowe mają po prostu koszt nieskończony. Ze względu na trudności w implementacji nieskończoności ograniczymy się do dostatecznie dużej wartości takiej krawędzi.
 
-Poszukiwanie sąsiada obecnego rozwiązania wykorzystuje technikę „2-opt move”. Polega ona na zamianie dwóch wierzchołków w poszukiwanej drodze, które nie sąsiadują. Zmiana ta powoduje usunięcie dwóch krawędzi z oryginalnej drogi, zamianie wierzchołków i ponowne połączenie przestawionych wierzchołków w drogę. Dla przykładu rozważmy drogę o następujących wierzchołkach $v$
+Sąsiadem rozwiązania $v$ nazywamy ciąg wierzchołków $v'$, który różni się od oryginalnego na dokładnie dwóch pozycjach. Poszukiwanie sąsiada obecnego rozwiązania wykorzystuje technikę „2-opt move”. Polega ona na zamianie dwóch wierzchołków w poszukiwanej drodze, które nie sąsiadują. Zmiana ta powoduje usunięcie dwóch krawędzi z oryginalnej drogi, zamianie wierzchołków i ponowne połączenie przestawionych wierzchołków w drogę. Dla przykładu rozważmy drogę o następujących wierzchołkach $v$
 
 \bgroup
 \def\arraystretch{1.5}
@@ -194,17 +194,24 @@ Schemat działania przeszukiwania tabu przestawia algorytm \ref{tabuSearchAlg}.
 	\While{$tries$ $\neq$ MAX-TRIES}
 		\State wygeneruj drogę początkową $v$
 		\State $count$ $\leftarrow$ 0
-		\While{$count$ $\neq$ MAX-ITER}
+		\State $iter$ $\leftarrow$ 0
+		\While{$iter$ $\neq$ MAX-ITER}
 			\State znajdź sąsiadów $v$ i wybierz najlepszego z nich
 			\State zamień odpowiednie wierzchołki
 			\State uaktualnij listę tabu
 			\If{nowa droga jest lepsza przy danej wartości $tries$}
 				\State uaktualnij informację o lokalnej najlepszej drodze
-				\State ++$count$
+				\State $count$ $\leftarrow$ 0
 				\If{bieżąca droga jest najlepsza dla wszystkich $tries$}
 					\State uaktualnij informację o globalnej najlepszej drodze
 					
     			\EndIf
+    		
+    		\Else
+    			\State ++$count$
+    		\EndIf
+    		\If{$count =$ MAX-COUNT}
+    			\State zbyt długo nie znaleziono lepszego rozwiązania - przerwij tę próbę
     		\EndIf
 		\EndWhile
 		\State ++$tries$
