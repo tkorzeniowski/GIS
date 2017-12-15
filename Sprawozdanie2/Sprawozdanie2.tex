@@ -241,17 +241,17 @@ $LT = [lt_{ij}]_{n\times n}$ & Lista tabu - macierz zakazanych przejść. Elemen
 Ponadto będą potrzebne iteratory pętli czy zmienna przechowująca wartość funkcji celu.
 
 \subsection{Projekty testów}
-W ramach testów należy sprawdzić poprawność działania algorytmu. W tym celu zostaną wykorzystane dane (macierz kosztów przejść $C$) dla których znana jest wartość najtańszej drogi komiwojażera. Liczność miast w tych danych będzie rzędu kilkunastu.
+W ramach testów należy sprawdzić poprawność działania algorytmu. Początkowo będzie dany graf pełny, dla którego znany jest koszt drogi optymalnej. Liczba wierzchołków grafu będzie rzędu kilkunastu. Program kilkukrotnie poszuka rozwiązania, a następnie najlepsze z nich zostanie zapamiętane i porównane z rozwiązaniem optymalnym.
 
-Najlepsze rozwiązanie dla grafu pełnego wraz z wartością funkcji celu zostanie zapamiętane. Reprezentująca je ścieżka pozostanie niezmieniona, podczas gdy w kolejnych testach poruszanie się po określonej części ulic będzie niedozwolone. Koszt niedozwolonych połączeń będzie zwiększony o umowną wartość nieskończoności - 1e38.
-
-Następnym krokiem będzie wygenerowanie macierzy kosztów $C$ wraz z losowymi ulicami jednokierunkowymi. Wagi krawędzi zostaną dostosowane tak, by zapewnić istnienie cyklu Hamiltona w grafie. Liczba ulic jednokierunkowych, jak i liczba miast będzie się zmienna w zależności od wygenerowanych danych. Pozwoli to zbadać zadania dużej skali (ok. 1000 wierzchołków). Wprowadzana liczba ulic jednokierunkowych będzie pewnym przyjętym procentem wszystkich ulic istniejących w grafie.
-
-Wyniki zostaną przedstawione w postaci tabeli. Dla określonej liczby miast i określonego procentu niedozwolonych połączeń, podany zostanie procent prawidłowych rozwiązań. Każdy test zostanie powtórzony kilka razy.
+Drugim krokiem będzie zakazanie ruchu w określonych połączeniach, które nie należały do najlepszego rozwiązania. Koszt niedozwolonych połączeń będzie zwiększony o umowną wartość nieskończoności - 1e38. Testy te zostaną poprowadzone dla kilku określonych procentów połączeń jednokierunkowych.
+	
+Następnie zostaną wygenerowanie losowe macierze kosztów $C$ wraz z zadanym procentem ulic jednokierunkowych. Wagi krawędzi zostaną dostosowane tak, by zapewnić istnienie cyklu Hamiltona w grafie. Pozwoli to zbadać zadania dużej skali (ok. 1000 wierzchołków).
+	
+Wszystkie te testy zostaną poprowadzone dla różnej liczby miast. Wyniki zostaną przedstawione w postaci tabeli. Dla określonej liczby miast i procentu niedozwolonych połączeń zostanie przedstawiony procent prawidłowych rozwiązań, a dla grafów pełnych podany zostanie również stosunek rozwiązania optymalnego do najlepszego odnalezionego przez algorytm. 
 \subsection{Założenia programu}
 Implementacja przeszukiwania tabu zostanie wykonana w języku C++. Program będzie wyświetlał na standardowym wyjściu znaleziony cykl komiwojażera oraz jego koszt. Dane o problemie do rozwiązania będą pobierane z pliku tekstowego. W pierwszej linii tego pliku zapisana będzie liczba miast, a w kolejnych koszty przejścia między odpowiednimi nimi, oddzielone spacjami.
 %\newpage
- 
+  
 %\newpage
 \begin{thebibliography}{9}
 \addcontentsline{toc}{section}{Literatura}
