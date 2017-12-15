@@ -243,11 +243,11 @@ Ponadto będą potrzebne iteratory pętli czy zmienna przechowująca wartość f
 \subsection{Projekty testów}
 W ramach testów należy sprawdzić poprawność działania algorytmu. W tym celu zostaną wykorzystane dane (macierz kosztów przejść $C$) dla których znana jest wartość najtańszej drogi komiwojażera. Liczność miast w tych danych będzie rzędu kilkunastu.
 
-Po potwierdzeniu poprawności wyznaczanego rozwiązania dane te zostaną uzupełnione o ulice jednokierunkowe tak, by wartości najtańszych dróg pozostały niezmienne. Algorytm powinien wyznaczać takie same rozwiązania jak w poprzednich testach.
+Najlepsze rozwiązanie dla grafu pełnego wraz z wartością funkcji celu zostanie zapamiętane. Reprezentująca je ścieżka pozostanie niezmieniona, podczas gdy w kolejnych testach poruszanie się po określonej części ulic będzie niedozwolone. Koszt niedozwolonych połączeń będzie zwiększony o umowną wartość nieskończoności - 1e38.
 
-Następnym krokiem będzie wygenerowanie macierzy kosztów $C$ wraz z losowymi ulicami jednokierunkowymi. Wagi krawędzi zostaną dostosowane tak, by zapewnić istnienie cyklu w grafie. Liczba ulic jednokierunkowych będzie się zmieniać tak samo jak liczba miast dla których będą generowane dane. Pozwoli to zbadać zadania dużej skali (ok. 1000 wierzchołków). Wprowadzana liczba ulic jednokierunkowych będzie pewnym przyjętym procentem wszystkich ulic istniejących w grafie.
+Następnym krokiem będzie wygenerowanie macierzy kosztów $C$ wraz z losowymi ulicami jednokierunkowymi. Wagi krawędzi zostaną dostosowane tak, by zapewnić istnienie cyklu Hamiltona w grafie. Liczba ulic jednokierunkowych, jak i liczba miast będzie się zmienna w zależności od wygenerowanych danych. Pozwoli to zbadać zadania dużej skali (ok. 1000 wierzchołków). Wprowadzana liczba ulic jednokierunkowych będzie pewnym przyjętym procentem wszystkich ulic istniejących w grafie.
 
-Liczba testów każdego rodzaju będzie rzędu kilkunastu dla każdego z przyjętych zestawów danych jak i liczby ulic jednokierunkowych.
+Wyniki zostaną przedstawione w postaci tabeli. Dla określonej liczby miast i określonego procentu niedozwolonych połączeń, podany zostanie procent prawidłowych rozwiązań. Każdy test zostanie powtórzony kilka razy.
 \subsection{Założenia programu}
 Implementacja przeszukiwania tabu zostanie wykonana w języku C++. Program będzie wyświetlał na standardowym wyjściu znaleziony cykl komiwojażera oraz jego koszt. Dane o problemie do rozwiązania będą pobierane z pliku tekstowego. W pierwszej linii tego pliku zapisana będzie liczba miast, a w kolejnych koszty przejścia między odpowiednimi nimi, oddzielone spacjami.
 %\newpage
