@@ -181,7 +181,7 @@ Ze względu na skierowanie grafu naszego zadania, technika „2-opt move” zost
 
 Taki sposób zamiany niesąsiadujących wierzchołków umożliwia znalezienie wszystkich sąsiadów obecnego rozwiązania. Wystarczy, że sprawdzimy każdą parę wierzchołków, nawet tych sąsiadujących (graf skierowany). Sąsiad o najmniejszej wartości funkcji celu stanie się wtedy bieżącym rozwiązaniem. Do obliczenia wartości funkcji celu wystarczy przejść nowo wyznaczonym cyklem, sumując wagi kolejnych krawędzi.
 
-Przeszukiwanie tabu bierze swoją nazwę z ruchów tabu. Jest to sposób zaznaczania, które wierzchołki zostały zamienione. Na listę tabu wpisujemy liczbę iteracji algorytmu, przez którą ponowna zamiana tychże wierzchołków staje się zakazana (tabu). 
+Przeszukiwanie tabu bierze swoją nazwę z ruchów tabu. Jest to sposób zaznaczania, które wierzchołki zostały zamienione. Na listę tabu wpisujemy liczbę iteracji algorytmu, przez którą ponowna zamiana tychże wierzchołków staje się zakazana (tabu). Trudno określić jak długo elementy listy tabu powinny być zakazane. Autorzy \cite{FogelHeurystyka} sugerują by czas pobytu na liście tabu był równy $3n$, gdzie $n$ oznacza liczbę miast problemu.
 
 Może się zdarzyć, że jeden z rozważanych sąsiadów objętych tabu daje świetny wynik, lepszy od jakiegokolwiek rozważanego wcześniej rozwiązania. W standardowym podejściu, algorytm przeszukiwania, wybrałby najlepsze z rozwiązań, w których nie ma ruchów zakazanych. Takie podejście powodowałoby, że algorytm jest mało elastyczny. Jeśli sytuacja jest nietypowa (znaleziono najlepsze ze wszystkich dotąd znanych rozwiązań) możemy zapomnieć o zakazie i wybierzemy nietypowe rozwiązanie. 
 
@@ -224,8 +224,6 @@ Schemat działania przeszukiwania tabu przestawia algorytm \ref{tabuSearchAlg}.
 
 Licznik $tries$ odpowiada za liczbę prób poszukiwania rozwiązania. W ramach każdej próby zostanie wykonanych $iter$ poszukiwań sąsiada i aktualizacji listy tabu. Jeśli jednak przez $count$ iteracji algorytmu rozwiązanie nie poprawi się względem dotychczas najlepszego znalezionego, nie ma sensu dalej poszukiwać. Może to wynikać z osiągnięcia minimum lokalnego w przestrzeni rozwiązań dopuszczalnych.
 
-\textbf{(... dywagacje na temat czasu pobytu na liście tabu???,)}
-
 \section{Implementacja algorytmu}
 
 \subsection{Struktury danych}
@@ -237,10 +235,11 @@ Do wyznaczenia rozwiązania problemu komiwojażera będziemy potrzebowali
 $C = [c_{ij}]_{n\times n}$ & Macierz kosztów przejść między $n$ miastami. Zakładamy, że graf jest pełny, a ulice kierunkowe przyjmują wartość wystarczająco dużą, żeby uznać ją za nieskończoność (np. 1e38). Reprezentacją takiej macierzy będzie tablica dwuwymiarowa (tablica tablic) typu zmiennoprzecinkowego podwójnej precyzji (double).\\
 $v$ & Wektor reprezentujący drogę komiwojażera. Zawiera indeksy kolejnych odwiedzonych miast, zatem będzie typu całkowitoliczbowego. \\
 $LT = [lt_{ij}]_{n\times n}$ & Lista tabu - macierz zakazanych przejść. Element $lt_{ij}$ przechowuje informację o liczbie iteracji przez które zamiana miast $i$ oraz $j$ jest zakazana. Typ całkowitoliczbowy.\\
- & piszemy coś o define-ach?\\
- & Iteratory, zmienna przechowująca wartość funkcji celu\\
 \end{tabularx}
 \egroup
+
+Ponadto będą potrzebne iteratory pętli czy zmienna przechowująca wartość funkcji celu.
+
 \subsection{Projekty testów}
 W ramach testów należy sprawdzić poprawność działania algorytmu. W tym celu zostaną wykorzystane dane (macierz kosztów przejść $C$) dla których znana jest wartość najtańszej drogi komiwojażera. Liczność miast w tych danych będzie rzędu kilkunastu.
 
@@ -250,16 +249,13 @@ Następnym krokiem będzie wygenerowanie macierzy kosztów $C$ wraz z losowymi u
 
 Liczba testów każdego rodzaju będzie rzędu kilkunastu dla każdego z przyjętych zestawów danych jak i liczby ulic jednokierunkowych.
 \subsection{Założenia programu}
-Implementacja przeszukiwania tabu zostanie wykonana w języku C++. Program będzie wyświetlał w konsoli znaleziony cykl komiwojażera oraz jego koszt. Dane o problemie do rozwiązania będą pobierane z pliku tekstowego. W pierwszej linii tego pliku zapisana będzie liczba miast, a w kolejnych koszty przejścia między odpowiednimi nimi, oddzielone spacjami.
-\\
-
-Środowisko programistyczne (IDE)?
+Implementacja przeszukiwania tabu zostanie wykonana w języku C++. Program będzie wyświetlał na standardowym wyjściu znaleziony cykl komiwojażera oraz jego koszt. Dane o problemie do rozwiązania będą pobierane z pliku tekstowego. W pierwszej linii tego pliku zapisana będzie liczba miast, a w kolejnych koszty przejścia między odpowiednimi nimi, oddzielone spacjami.
 %\newpage
  
 %\newpage
 \begin{thebibliography}{9}
 \addcontentsline{toc}{section}{Literatura}
-\bibitem{BOCD}
+\bibitem{FogelHeurystyka}
 Z. Michalewicz, D. B. Fogel
 \emph{Jak to rozwiązać czyli nowoczesna heurystyka}.
 WNT, Warszawa 2006
