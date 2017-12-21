@@ -17,7 +17,7 @@ using namespace std;
 int N; // number of cities (vertices)
 double **costMatrix; // cost of each edge
 int **tabu_list, **tabu_f_list;
-double score, bestSolverScore;
+double score=0.0, bestSolverScore=0.0;
 int *v, *foundSolution; // vertices, found path
 
 
@@ -51,7 +51,7 @@ void readCostMatrix(string fileName){
 }
 
 double getScore(int *v){ // cost of given path
-	int score = 0;
+	double score = 0;
 	for(int i = 0; i < (N - 1); ++i){
 		score += costMatrix[v[i]][v[i+1]];
 	}
@@ -90,7 +90,8 @@ void initSolution(){ // initial (random) path
 }
 
 
-int* getBestNearbySolution(int* v, int it){ // search for neighbours
+//int* getBestNearbySolution(int* v, int it){ // search for neighbours
+int* getBestNearbySolution(int it){ // search for neighbours
 	int *v_temp = new int[N]; // copy of current solution
 
 	for(int i = 0; i < N; ++i){
@@ -101,7 +102,7 @@ int* getBestNearbySolution(int* v, int it){ // search for neighbours
 	int vertexA = 0;
 	int vertexB = 1;
 	for(int i = 0; i < N; ++i){
-		for(int j = (i+2); j < N; ++j){ // zmiana z j=(i+1)
+		for(int j = (i+1); j < N; ++j){ // zmiana z j=(i+1)
 			//swap for new solution
 			swap(v_temp[i], v_temp[j]); //s->swapSolve(i,j);
 
@@ -137,8 +138,28 @@ double solveTSP(int numCandidate){
 		bestSolverScore = std::numeric_limits<double>::max();
 
 		for(int i = 0; i < NUM_INTERATION; ++i){
-			v_temp = getBestNearbySolution(v, i);
+			//v_temp = getBestNearbySolution(v, i);
+			v_temp = getBestNearbySolution(i);
+
+
+//			for(int h = 0; h < N; ++h){
+//					//cout<<v_temp[h]<<" ";
+//				}
+//			//cout<<endl;
+
+
 			double score = getScore(v_temp);
+//			cout<<i<<" score "<<score<< " bestSolverScore "<<bestSolverScore<<" bestSolScore "<<bestSolutionScore<<endl;
+
+//			double w=0;
+//			for(int g = 0; g < (N - 1); ++g){
+//						w += costMatrix[v_temp[g]][v_temp[g+1]];
+//						//cout<<w<< " " <<costMatrix[v[g]][v[g+1]]<<endl;
+//					}
+//				w += costMatrix[v_temp[N-1]][v_temp[0]];
+//			cout<<"koszt obliczony "<<w<<endl;
+
+
 			if(score < bestSolverScore){
 				bestSolverScore = score;
 				countTime = 0;
@@ -192,16 +213,32 @@ int main(int argc, char* argv[]){
 	solver3.solve(7);				
 	*/
 
-	readCostMatrix("file.txt");
+	readCostMatrix("test36.txt");
 	initSolution();
+//	double wynik = 0;
+//	for(int i = 0; i < (N - 1); ++i){
+//				wynik += costMatrix[v[i]][v[i+1]];
+//				cout<<wynik<< " " <<costMatrix[v[i]][v[i+1]]<<endl;
+//			}
+//		wynik += costMatrix[v[N-1]][v[0]];
 	initTabuList();
 
-	int best = solveTSP(1);
+	double best = solveTSP(2);
 
 	cout<<"Koñcowe rozwi¹zanie: ";
 	for(int i = 0; i < N; ++i){
 		cout<<foundSolution[i]<<" ";
 	}
 	cout<<endl<<"Koszt trasy: "<<best<<endl;
+
+//	wynik=0;
+//	for(int i = 0; i < (N - 1); ++i){
+//			wynik += costMatrix[foundSolution[i]][foundSolution[i+1]];
+//			cout<<wynik<< " " <<costMatrix[foundSolution[i]][foundSolution[i+1]]<<endl;
+//		}
+//	wynik += costMatrix[foundSolution[N-1]][foundSolution[0]];
+//	cout<<wynik<< " " <<costMatrix[foundSolution[N-1]][foundSolution[0]]<<endl;
+//	cout<<"wynik = "<<wynik<<endl;
+
 	return 0;
 }
