@@ -143,7 +143,7 @@ x \text{ jest drogą w grafie G}
 
 %Zauważmy, że model znajduje drogę, a nie cykl. Nie jest to jednak przeszkodą, jeśli założymy, że znalezioną drogę zamkniemy w cykl przez dodanie krawędzi między pierwszym i ostatnim wierzchołkiem.
 
-Zauważmy, że w macierzy $X = [x_{ij}]_{n\times n}$ w każdej kolumnie i każdym wierszu występuje dokładnie jedna jedynka. Zatem można reprezentować znaleziony cykl jako wektor kolejnych wierzchołków odwiedzanych przez komiwojażera. Wiemy, że każde miasto występuje w tym wektorze tylko raz, a cykl zamykany jest przez skrajne wierzchołki wektora.
+Zauważmy, że w macierzy $X = [x_{ij}]_{n\times n}$ w każdej kolumnie i każdym wierszu występuje dokładnie jedna jedynka. Zatem można reprezentować znaleziony cykl jako wektor kolejnych wierzchołków odwiedzanych przez komiwojażera. Obliczenie kosztu podróży sprowadza się wtedy do wzoru $\sum_{i=1}^{n-1}c_{i(i+1)} + c_{n1}$, gdzie $i$ jest indeksem kolejnego wierzchołka. Wiemy, że każde miasto występuje w tym wektorze tylko raz, a cykl zamykany jest przez skrajne wierzchołki wektora. Tak utworzony cykl zawsze będzie cyklem Hamiltona, jeśli operacjami wykonywanymi na jego elementach będzie zamiana ich kolejności.
 
 Tak przedstawione zadanie rozwiązuje problem komiwojażera dla grafu pełnego. Zadanie jednak nie jest jedynie problemem komiwojażera. Należy rozważyć połączenia jednokierunkowe między dowolnymi miastami \mbox{$A$ i $B$}, zatem musimy rozważać graf skierowany. Struktura problemu i przyjęty model nie musi być zmieniany. Gwarantuje nam to odpowiednia konstrukcja macierzy kosztów $C = [c_{ij}]_{n\times n}$. W przeciwieństwie do grafu nieskierowanego nie będzie ona symetryczna. Zatem otrzymujemy graf skierowany gdzie ulice jednokierunkowe będą reprezentowane przez krawędzie o nieskończonym koszcie. Ze względu na trudności w implementacji nieskończoności ograniczymy się do dostatecznie dużej wartości takiej krawędzi.
 
@@ -156,7 +156,7 @@ Przeszukiwanie tabu rozpoczyna się wybraniem rozwiązania początkowego. W każ
 
 Wybrany algorytm bierze swoją nazwę z ruchów tabu. Jest to sposób zaznaczania, które wierzchołki zostały zamienione. Na listę tabu wpisujemy liczbę iteracji algorytmu, przez którą ponowna zamiana tychże wierzchołków staje się zakazana (tabu). Z każdą iteracją algorytmu czas, przez który wcześniej zazanczony ruch jest zakazany, zostaje zmniejszony o 1. Lista tabu jest listą tylko z nazwy. W rzeczywistości będziemy operowali na macierzy górnej trójkątnej $LT = [lt_{ij}]_{n\times n}$. Element $lt_{ij}$ będzie zawierał informację o liczbie iteracji, przez które zamiana wierzchołków $i$ oraz $j$ jest zakazana. Gdy wartość $lt_{ij} = 0$, dany ruch przestanie być zakazany. Trudno określić jak długo elementy listy tabu powinny być zakazane. Autorzy \cite{FogelHeurystyka} sugerują by czas pobytu na liście tabu był równy $3n$, gdzie $n$ oznacza liczbę miast problemu.
 
-Na początku działania algorytmu potrzebne jest pewne wstępne rozwiązanie. W naszym przypadku wystarczy przyjąć dowolny ciąg wierzchołków (miast). Rozważamy grafy pełne, więc wybór ulicy jednokierunkowej nie jest przeszkodą. Krawędzie które „nie istnieją” (nie ma połączenia między danymi miastami) lub są to ulice jednokierunkowe mają po prostu bardzo duży koszt. 
+Na początku działania algorytmu potrzebne jest pewne wstępne rozwiązanie. W naszym przypadku będzie to różnowartościowy ciąg, zawierający wszystkie liczby naturalne ze zbioru $<1,n>$. Rozważamy grafy pełne, więc wybór ulicy jednokierunkowej nie jest przeszkodą. Krawędzie które „nie istnieją” (nie ma połączenia między danymi miastami) lub są to ulice jednokierunkowe mają po prostu bardzo duży koszt. 
 
 Poszukiwanie sąsiada $v'$ obecnego rozwiązania wykorzystuje technikę „2-opt move”, Metoda ta została przewidziana dla grafów nieskierowanych. Polega na zamianie dwóch wierzchołków w poszukiwanej drodze, które nie sąsiadują. Zmiana ta powoduje usunięcie dwóch krawędzi z oryginalnej drogi, zamianie wierzchołków i ponowne połączenie przestawionych wierzchołków w drogę. Dla przykładu rozważmy drogę o następujących wierzchołkach $v$
 
@@ -177,7 +177,7 @@ Ze względu na skierowanie grafu naszego zadania, technika „2-opt move” zost
 \vspace{-0pt}
 \centering
 \includegraphics[width=10cm]{2opt4krawedzie}
-\caption{Zamiana wierzchołków $v_{i+1}$ oraz $v_{j}$ zgodnie w 2-opt move dla grafu nieskierowanego (a) oraz skierowanego (b).}
+\caption{Zamiana wierzchołków $v_{i+1}$ oraz $v_{j}$ zgodnie z 2-opt move dla grafu nieskierowanego (a) oraz skierowanego (b).}
 \label{2opt4krawedzie}
 \end{figure}
 
@@ -189,7 +189,7 @@ Przyjmując zamianę wierzchołków jak w przykładzie grafu nieskierowanego, zo
 \vspace{-0pt}
 \centering
 \includegraphics[width=15cm]{2optMove}
-\caption{Zamiana wierzchołków $v_{i+1}$ oraz $v_{j}$ zgodnie w 2-opt move dla grafu skierowanego.}
+\caption{Zamiana wierzchołków $v_{i+1}$ oraz $v_{j}$ zgodnie z 2-opt move dla grafu skierowanego.}
 \label{2optMove}
 \end{figure}
 
