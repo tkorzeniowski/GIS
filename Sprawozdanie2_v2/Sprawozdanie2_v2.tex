@@ -143,7 +143,9 @@ x \text{ jest drogą w grafie G}
 
 %Zauważmy, że model znajduje drogę, a nie cykl. Nie jest to jednak przeszkodą, jeśli założymy, że znalezioną drogę zamkniemy w cykl przez dodanie krawędzi między pierwszym i ostatnim wierzchołkiem.
 
-Zauważmy, że w macierzy $X = [x_{ij}]_{n\times n}$ w każdej kolumnie i każdym wierszu występuje dokładnie jedna jedynka. Zatem można reprezentować znaleziony cykl jako wektor kolejnych wierzchołków odwiedzanych przez komiwojażera. Obliczenie kosztu podróży sprowadza się wtedy do wzoru $\sum_{i=1}^{n-1}c_{i(i+1)} + c_{n1}$, gdzie $i$ jest indeksem kolejnego wierzchołka. Wiemy, że każde miasto występuje w tym wektorze tylko raz, a cykl zamykany jest przez skrajne wierzchołki wektora. Tak utworzony cykl zawsze będzie cyklem Hamiltona, jeśli operacjami wykonywanymi na jego elementach będzie zamiana ich kolejności.
+%Obliczenie kosztu podróży sprowadza się wtedy do wzoru $\sum_{i=1}^{n-1}c_{i(i+1)} + c_{n1}$, gdzie $i$ jest indeksem kolejnego wierzchołka.
+
+Zauważmy, że w macierzy $X = [x_{ij}]_{n\times n}$ w każdej kolumnie i każdym wierszu występuje dokładnie jedna jedynka. Zatem można reprezentować znaleziony cykl jako wektor $w$ kolejnych wierzchołków odwiedzanych przez komiwojażera. Wiemy, że każde miasto występuje w tym wektorze tylko raz, a cykl zamykany jest przez skrajne wierzchołki wektora. Tak utworzony cykl zawsze będzie cyklem Hamiltona, jeśli operacjami wykonywanymi na jego elementach będzie zamiana ich kolejności.
 
 Tak przedstawione zadanie rozwiązuje problem komiwojażera dla grafu pełnego. Zadanie jednak nie jest jedynie problemem komiwojażera. Należy rozważyć połączenia jednokierunkowe między dowolnymi miastami \mbox{$A$ i $B$}, zatem musimy rozważać graf skierowany. Struktura problemu i przyjęty model nie musi być zmieniany. Gwarantuje nam to odpowiednia konstrukcja macierzy kosztów $C = [c_{ij}]_{n\times n}$. W przeciwieństwie do grafu nieskierowanego nie będzie ona symetryczna. Zatem otrzymujemy graf skierowany gdzie ulice jednokierunkowe będą reprezentowane przez krawędzie o nieskończonym koszcie. Ze względu na trudności w implementacji nieskończoności ograniczymy się do dostatecznie dużej wartości takiej krawędzi.
 
@@ -152,13 +154,16 @@ W ramach zadania sprawdzimy czy powyższe modelowanie ulic jednokierunkowych jes
 \subsection{Przeszukiwanie tabu}
 Wybranym sposobem rozwiązania problemu będzie algorytm przeszukiwania tabu. Jest to metaheurystyka stosowana do rozwiązywania problemów optymalizacyjnych. Polega na  wykonaniu ciągu kolejnych ruchów w celu przeszukiwania przestrzeni rozwiązań dopuszczalnych zadania. 
 
-Przeszukiwanie tabu rozpoczyna się wybraniem rozwiązania początkowego. W każdej iteracji znajdowane jest rozwiązanie lokalnie najlepsze, a także poszukiwani są sąsiedzi (w zbiorze rozwiązań dopuszczalnych) takiego rozwiązania. Sąsiadem rozwiązania $v$ nazywamy ciąg wierzchołków $v'$, który różni się od oryginalnego na dokładnie dwóch pozycjach. Najlepszy ze wszystkich znalezionych sąsiadów staje się nowym rozwiązaniem lokalnym dla kolejnej iteracji. Najlepszy z sąsiadów charakteryzuje się mniejszą wartością funkcji celu (\ref{f_celu}) od obecnego rozwiązania.
+Przeszukiwanie tabu rozpoczyna się wybraniem rozwiązania początkowego. W każdej iteracji znajdowane jest rozwiązanie lokalnie najlepsze, a także poszukiwani są sąsiedzi (w zbiorze rozwiązań dopuszczalnych) takiego rozwiązania. Sąsiadem rozwiązania $w$ nazywamy ciąg wierzchołków $w'$, który różni się od oryginalnego na dokładnie dwóch pozycjach. Najlepszy ze wszystkich znalezionych sąsiadów staje się nowym rozwiązaniem lokalnym dla kolejnej iteracji. Najlepszy z sąsiadów charakteryzuje się mniejszą wartością funkcji celu (\ref{f_celu}) od obecnego rozwiązania.
 
-Wybrany algorytm bierze swoją nazwę z ruchów tabu. Jest to sposób zaznaczania, które wierzchołki zostały zamienione. Na listę tabu wpisujemy liczbę iteracji algorytmu, przez którą ponowna zamiana tychże wierzchołków staje się zakazana (tabu). Z każdą iteracją algorytmu czas, przez który wcześniej zazanczony ruch jest zakazany, zostaje zmniejszony o 1. Lista tabu jest listą tylko z nazwy. W rzeczywistości będziemy operowali na macierzy górnej trójkątnej $LT = [lt_{ij}]_{n\times n}$. Element $lt_{ij}$ będzie zawierał informację o liczbie iteracji, przez które zamiana wierzchołków $i$ oraz $j$ jest zakazana. Gdy wartość $lt_{ij} = 0$, dany ruch przestanie być zakazany. Trudno określić jak długo elementy listy tabu powinny być zakazane. Autorzy \cite{FogelHeurystyka} sugerują by czas pobytu na liście tabu był równy $3n$, gdzie $n$ oznacza liczbę miast problemu.
+Wybrany algorytm bierze swoją nazwę z ruchów tabu. Jest to sposób zaznaczania, które wierzchołki zostały zamienione. Na listę tabu wpisujemy liczbę iteracji algorytmu, przez którą ponowna zamiana tychże wierzchołków staje się zakazana (tabu). Z każdą iteracją algorytmu czas, przez który wcześniej zazanczony ruch jest zakazany, zostaje zmniejszony o 1. Lista tabu jest listą tylko z nazwy. W rzeczywistości będziemy operowali na macierzy górnej trójkątnej $LT = [lt_{ij}]_{n\times n}$. Element $lt_{ij}$ będzie zawierał informację o liczbie iteracji, przez które zamiana wierzchołków $i$ oraz $j$ jest zakazana. Gdy wartość $lt_{ij} = 0$, dany ruch przestanie być zakazany. 
 
-Na początku działania algorytmu potrzebne jest pewne wstępne rozwiązanie. W naszym przypadku będzie to różnowartościowy ciąg, zawierający wszystkie liczby naturalne ze zbioru $<1,n>$. Rozważamy grafy pełne, więc wybór ulicy jednokierunkowej nie jest przeszkodą. Krawędzie które „nie istnieją” (nie ma połączenia między danymi miastami) lub są to ulice jednokierunkowe mają po prostu bardzo duży koszt. 
+W implementacji, powyższa dekrementacja listy będzie mało wydajna. Z tego względu będziemy na liście tabu zapisywać aktualny numer iteracji algorytmu powiękoszony o stałą liczbę iteracji przez które dany ruch jest tabu. Do sprawdzenia czy dany ruch jest zakazany, będziemy porównywać wartość listy tabu tego ruchu z akrulnym licznikiem iteracji. Gdy wartość listy tabu będzie co najmniej taka jak aktualy licznik iteracji, ruch przestanie być zakazany. Trudno określić jak długo elementy listy tabu powinny być zakazane. Autorzy \cite{FogelHeurystyka} sugerują by czas pobytu na liście tabu był równy $3n$, gdzie $n$ oznacza liczbę miast problemu.
 
-Poszukiwanie sąsiada $v'$ obecnego rozwiązania wykorzystuje technikę „2-opt move”, Metoda ta została przewidziana dla grafów nieskierowanych. Polega na zamianie dwóch wierzchołków w poszukiwanej drodze, które nie sąsiadują. Zmiana ta powoduje usunięcie dwóch krawędzi z oryginalnej drogi, zamianie wierzchołków i ponowne połączenie przestawionych wierzchołków w drogę. Dla przykładu rozważmy drogę o następujących wierzchołkach $v$
+Na początku działania algorytmu potrzebne jest pewne wstępne rozwiązanie. W naszym przypadku będzie to różnowartościowy ciąg, zawierający wszystkie liczby naturalne ze zbioru $[1,n]$. Rozważamy grafy pełne, więc wybór ulicy jednokierunkowej nie jest przeszkodą. Krawędzie które „nie istnieją” (nie ma połączenia między danymi miastami) lub są to ulice jednokierunkowe mają po prostu bardzo duży koszt.
+
+\subsection{2-opt move}
+Poszukiwanie sąsiada $w'$ obecnego rozwiązania wykorzystuje technikę „2-opt move”, Metoda ta została przewidziana dla grafów nieskierowanych. Polega na zamianie dwóch wierzchołków w poszukiwanej drodze, które nie sąsiadują. Zmiana ta powoduje usunięcie dwóch krawędzi z oryginalnej drogi, zamianie wierzchołków i ponowne połączenie przestawionych wierzchołków w drogę. Dla przykładu rozważmy drogę $w$ o następujących wierzchołkach $v$
 
 \bgroup
 \def\arraystretch{1.5}
@@ -171,7 +176,7 @@ Po zmianie: & $\cdots$ & $v_{i-1}$ & $v_{i}$ & $\mathbf{v_{j}}$ & $v_{i+2}$ & $\
 
 Zostały usunięte krawędzie między wierzchołkami $(v_{i}, v_{i+1})$ oraz $(v_{j}, v_{j+1})$, lecz powstały dwie nowe krawędzie $(v_{i}, v_{j})$ oraz $(v_{i+1}, v_{j+1})$. Dla reszty krawędzi pozostała droga przed zmianą, a dla niektórych z nich zmienił się kierunek ich przechodzenia w nowo wyznaczonej drodze. Zamianę tę prezentuje wykres \ref{2opt4krawedzie}a.
 
-Ze względu na skierowanie grafu naszego zadania, technika „2-opt move” zostanie zachowana, lecz zamiast dwóch krawędzi, zostaną zmienione cztery. Wynika to z wykresu \ref{2opt4krawedzie}b. Po dodaniu skierowania cyklu, widać, że nie da się dodać dwóch nowych krawędzi tak, aby pozostałe krawędzie można było przejść zgodnie z kierunkiem przed zmianą.
+Ze względu na skierowanie grafu naszego zadania, technika „2-opt move” zostanie zachowana, lecz zamiast dwóch krawędzi, zostaną zmienione cztery. Wynika to z wykresu \ref{2opt4krawedzie}b. Po dodaniu skierowania cyklu, widać, że nie da się dodać dwóch nowych krawędzi tak, aby pozostałe krawędzie można było przejść zgodnie z ich kierunkiem przed zmianą.
 
 \begin{figure}[ht]
 \vspace{-0pt}
@@ -195,8 +200,12 @@ Przyjmując zamianę wierzchołków jak w przykładzie grafu nieskierowanego, zo
 
 Taki sposób zamiany niesąsiadujących wierzchołków umożliwia znalezienie wszystkich sąsiadów obecnego rozwiązania. Wystarczy, że sprawdzimy każdą parę wierzchołków, nawet tych sąsiadujących. Sąsiad o najmniejszej wartości funkcji celu stanie się wtedy bieżącym rozwiązaniem. Do obliczenia wartości funkcji celu wystarczy przejść nowo wyznaczonym cyklem, sumując wagi kolejnych krawędzi.
 
+Ponadto, w celu skrócenia czasu wykonania algorytmu wprowadzimy licznik $count$. Będzie on odpowiedzialny za zliczanie iteracji, w których znaleziony sąsiad nie daje lepszego rozwiązania od aktualnie znanego.
+
+\subsection{Kryterium aspiracji}
 Może się zdarzyć, że jeden z rozważanych sąsiadów objętych tabu daje świetny wynik, lepszy od jakiegokolwiek rozważanego wcześniej rozwiązania. W standardowym podejściu, algorytm przeszukiwania, wybrałby najlepsze z rozwiązań, w których nie ma ruchów zakazanych. Takie podejście powodowałoby, że algorytm jest mało elastyczny. Jeśli sytuacja jest nietypowa (znaleziono najlepsze ze wszystkich dotąd znanych rozwiązań) możemy zapomnieć o zakazie i wybierzemy nietypowe rozwiązanie. 
 
+\subsection{Schemat algorytmu}
 Schemat działania przeszukiwania tabu przestawia algorytm \ref{tabuSearchAlg}. Licznik $tries$ odpowiada za liczbę prób poszukiwania rozwiązania. W ramach każdej próby zostanie wykonanych $iter$ poszukiwań sąsiada i aktualizacji listy tabu. Najlepsze rozwiązanie w danej próbie (lokalne) jest przechowywane w $bestSolverScore$. Jeśli to rozwiązanie jest najlepsze z dotychczas znalezionych dla wszystkich prób (globalne) zostanie zapamiętane w $bestSolutionScore$. Jeśli jednak przez $count$ iteracji algorytmu rozwiązanie nie poprawi się względem dotychczas najlepszego znalezionego, nie ma sensu dalej poszukiwać. Może to wynikać z osiągnięcia minimum lokalnego w przestrzeni rozwiązań dopuszczalnych.
 
 \begin{algorithm}[ht]
@@ -210,14 +219,14 @@ Schemat działania przeszukiwania tabu przestawia algorytm \ref{tabuSearchAlg}. 
 		\State $count$ $\leftarrow$ 0
 		\State $iter$ $\leftarrow$ 0
 		\While{$iter$ $\neq$ MAX-ITER}
-			\State znajdź wszystkich sąsiadów $v$ i wybierz najlepszego z nich: $v'$
-			\State zamień odpowiednie wierzchołki: $v \leftarrow v'$ 
-			\State uaktualnij listę tabu: $lt_{ij} \leftarrow 3n$
-			\If{$v$ jest lepsza dla danego $tries$}
-				\State $bestSolverScore \leftarrow v$
+			\State znajdź wszystkich sąsiadów $w$ i wybierz najlepszego z nich: $w'$
+			\State zamień odpowiednie wierzchołki: $w \leftarrow w'$ 
+			\State uaktualnij listę tabu: $lt_{ij} \leftarrow iter + 3n$
+			\If{$w$ jest lepsza dla danego $tries$}
+				\State $bestSolverScore \leftarrow w$
 				\State $count$ $\leftarrow$ 0
-				\If{$v$ jest najlepsza dla wszystkich $tries$}
-					\State $bestSolutionScore \leftarrow v$
+				\If{$w$ jest najlepsza dla wszystkich $tries$}
+					\State $bestSolutionScore \leftarrow w$
 					
     			\EndIf
     		

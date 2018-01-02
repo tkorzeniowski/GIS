@@ -2,8 +2,11 @@
 \BOOKMARK [1][-]{section.2}{Opis zadania}{}% 2
 \BOOKMARK [2][-]{subsection.2.1}{Problem komiwojazera}{section.2}% 3
 \BOOKMARK [2][-]{subsection.2.2}{Przeszukiwanie tabu}{section.2}% 4
-\BOOKMARK [1][-]{section.3}{Implementacja algorytmu}{}% 5
-\BOOKMARK [2][-]{subsection.3.1}{Struktury danych}{section.3}% 6
-\BOOKMARK [2][-]{subsection.3.2}{Projekty test\363w}{section.3}% 7
-\BOOKMARK [2][-]{subsection.3.3}{Za\233ozenia programu}{section.3}% 8
-\BOOKMARK [1][-]{section*.3}{Literatura}{}% 9
+\BOOKMARK [2][-]{subsection.2.3}{2-opt move}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.4}{Kryterium aspiracji}{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.5}{Schemat algorytmu}{section.2}% 7
+\BOOKMARK [1][-]{section.3}{Implementacja algorytmu}{}% 8
+\BOOKMARK [2][-]{subsection.3.1}{Struktury danych}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.2}{Projekty test\363w}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.3}{Za\233ozenia programu}{section.3}% 11
+\BOOKMARK [1][-]{section*.3}{Literatura}{}% 12

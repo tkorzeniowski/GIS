@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.11.6)  30 DEC 2017 12:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.11.6)  2 JAN 2018 14:24
 entering extended mode
 **./Sprawozdanie2_v2.tex
 (Sprawozdanie2_v2.tex
@@ -979,66 +979,64 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 112.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]pdfTeX warning (ext4): des
-tination with the same identifier (name{page.}) has been already used, duplicat
-e ignored
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
+Underfull \vbox (badness 1033) has occurred while \output is active []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.172 Z
-       ostały usunięte krawędzie między wierzchołkami $(v_{i}, v_{i+1})...
-[2] <2opt4krawedzie.png, id=67, 582.175pt x 322.20375pt>
+l.167 
+       [2] <2opt4krawedzie.png, id=78, 582.175pt x 322.20375pt>
 File: 2opt4krawedzie.png Graphic file (type png)
 
 <use 2opt4krawedzie.png>
-Package pdftex.def Info: 2opt4krawedzie.png used on input line 179.
+Package pdftex.def Info: 2opt4krawedzie.png used on input line 184.
 (pdftex.def)             Requested size: 284.52756pt x 157.47314pt.
- <2optMove.png, id=70, 894.34125pt x 157.58875pt>
+ <2optMove.png, id=81, 894.34125pt x 157.58875pt>
 File: 2optMove.png Graphic file (type png)
 
 <use 2optMove.png>
-Package pdftex.def Info: 2optMove.png used on input line 191.
+Package pdftex.def Info: 2optMove.png used on input line 196.
 (pdftex.def)             Requested size: 426.79134pt x 75.20409pt.
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.201 
+l.204 
        [3 <./2opt4krawedzie.png> <./2optMove.png>]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 203.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
+put line 212.
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.253 P
+l.262 P
        onadto będą potrzebne iteratory pętli czy zmienna przechowująca w...
 [4]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 275.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 284.
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.275 \end{document}
+l.284 \end{document}
                      [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 275.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 284.
  (Sprawozdanie2_v2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 275.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 275.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 284.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 284.
 Package rerunfilecheck Info: File `Sprawozdanie2_v2.out' has not changed.
-(rerunfilecheck)             Checksum: BDFB400199248FEBE525994A6F6D6CFE;541.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 275.
+(rerunfilecheck)             Checksum: E1C5504E0A679B3FB94218BDBF31FEE1;740.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 284.
  ) 
 Here is how much of TeX's memory you used:
- 11282 strings out of 493323
- 164152 string characters out of 3140394
- 286023 words of memory out of 3000000
- 14599 multiletter control sequences out of 15000+200000
+ 11288 strings out of 493323
+ 164242 string characters out of 3140394
+ 287023 words of memory out of 3000000
+ 14602 multiletter control sequences out of 15000+200000
  13419 words of font info for 40 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,12n,43p,992b,423s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,12n,43p,992b,425s stack positions out of 5000i,500n,10000p,200000b,50000s
 {D:/Programy/LaTeX/MiKTeX/fonts/enc/dvips/pl/plit.enc}{D:/Programy/LaTeX/MiKT
 eX/fonts/enc/dvips/pl/plrm.enc}{D:/Programy/LaTeX/MiKTeX/fonts/enc/dvips/pl/plm
 s.enc}{D:/Programy/LaTeX/MiKTeX/fonts/enc/dvips/pl/plme.enc}{D:/Programy/LaTeX/
@@ -1053,9 +1051,9 @@ r17.pfb><D:/Programy/LaTeX/MiKTeX/fonts/type1/public/pl/plr8.pfb><D:/Programy/L
 aTeX/MiKTeX/fonts/type1/public/pl/plsy10.pfb><D:/Programy/LaTeX/MiKTeX/fonts/ty
 pe1/public/pl/plsy8.pfb><D:/Programy/LaTeX/MiKTeX/fonts/type1/public/pl/plti10.
 pfb>
-Output written on Sprawozdanie2_v2.pdf (5 pages, 136546 bytes).
+Output written on Sprawozdanie2_v2.pdf (5 pages, 138058 bytes).
 PDF statistics:
- 141 PDF objects out of 1000 (max. 8388607)
- 20 named destinations out of 1000 (max. 500000)
- 83 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 153 PDF objects out of 1000 (max. 8388607)
+ 23 named destinations out of 1000 (max. 500000)
+ 107 words of extra memory for PDF output out of 10000 (max. 10000000)
 
