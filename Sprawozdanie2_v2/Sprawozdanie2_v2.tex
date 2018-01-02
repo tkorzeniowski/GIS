@@ -254,7 +254,7 @@ Do wyznaczenia rozwiązania problemu komiwojażera będziemy potrzebowali
 \begin{tabularx}{\textwidth}{l|X}
 %\hline
 $C = [c_{ij}]_{n\times n}$ & Macierz kosztów przejść między $n$ miastami. Zakładamy, że graf jest pełny, a ulice kierunkowe przyjmują wartość wystarczająco dużą, żeby uznać ją za nieskończoność (np. 1e38). Reprezentacją takiej macierzy będzie tablica dwuwymiarowa (tablica tablic) typu zmiennoprzecinkowego podwójnej precyzji (double).\\
-$v$ & Wektor reprezentujący drogę komiwojażera. Zawiera indeksy kolejnych odwiedzonych miast, zatem będzie typu całkowitoliczbowego. \\
+$w$ & Wektor reprezentujący drogę komiwojażera. Zawiera indeksy kolejnych odwiedzonych miast, zatem będzie typu całkowitoliczbowego. \\
 $LT = [lt_{ij}]_{n\times n}$ & Lista tabu - macierz zakazanych przejść. Element $lt_{ij}$ przechowuje informację o liczbie iteracji przez które zamiana miast $i$ oraz $j$ jest zakazana. Typ całkowitoliczbowy.\\
 \end{tabularx}
 \egroup
