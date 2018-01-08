@@ -227,7 +227,7 @@ Schemat działania przeszukiwania tabu przestawia algorytm \ref{tabuSearchAlg}. 
 		\EndWhile
 			%\State znajdź wszystkich sąsiadów drogi $w$: $w'$% i wybierz najlepszego z nich: $w'$
 			%\State zamień odpowiednie wierzchołki: $w \leftarrow w'$ 
-			\State wybierz najlepszego sąsiada: $w \leftarrow w'$ 
+			
 			
 %			\If{$w$ jest lepsza dla danego $tries$}
 %				\State $bestSolverScore \leftarrow w$
@@ -238,6 +238,7 @@ Schemat działania przeszukiwania tabu przestawia algorytm \ref{tabuSearchAlg}. 
 %    			\EndIf
 			\State uaktualnij listę tabu: $lt_{ij} \leftarrow iter + 3n$
     		\If{$w'$ jest lepszy od $w$ dla danego $tries$}
+    			\State wybierz najlepszego sąsiada: $w \leftarrow w'$ 
 				\State $bestSolverScore \leftarrow w$
 				\State $count$ $\leftarrow$ 0
 				\If{$w$ jest najlepszy dla wszystkich $tries$}
