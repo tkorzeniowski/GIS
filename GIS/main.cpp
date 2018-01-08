@@ -9,7 +9,7 @@ using namespace std;
 
 
 #define NUM_INTERATION 10000	// maximal number of iterations
-#define TIME_TRY 2000			// maximal number of iterations with no improvement
+#define TIME_TRY 200			// maximal number of iterations with no improvement
 
 int N; // number of cities
 double **costMatrix; // cost of each edge
@@ -154,7 +154,8 @@ int* getBestNearbySolution(int it){ // search for neighbours
 
 			double currentScore = getScore(v_temp);
 
-			// found solution is better and not tabu or the best of all
+			// found solution is better and not tabu or the best of all found
+			//if( (bestScore > currentScore && tabu_list[i][j] <= it) || (currentScore < bestSolverScore && currentScore < bestScore)){
 			if( (bestScore > currentScore && tabu_list[i][j] <= it) || currentScore < bestSolverScore){
 				vertexA = i;	// remember best neighbour
 				vertexB = j;
@@ -222,7 +223,7 @@ double solveTSP(int numCandidate){
 
 int main(int argc, char* argv[]){
 	// tabu search for generated costMatrix
-	//string fn = generateData(500, 10);
+	//string fn = generateData(1000, 90);
 	//readCostMatrix(fn);
 
 	//tabu search for existing file
@@ -242,7 +243,7 @@ int main(int argc, char* argv[]){
 	const clock_t begin_time = clock();
 	time(&start);
 
-	double best = solveTSP(5);		// number of tries
+	double best = solveTSP(1);		// number of tries
 
 	time(&end);
 	cout << "Czas wykonania: " << difftime(end,start)<<endl;
@@ -253,5 +254,6 @@ int main(int argc, char* argv[]){
 		cout<<foundSolution[i]<<" ";
 	}
 	cout<<endl<<"Koszt trasy: "<<best<<endl;
+
 	return 0;
 }
