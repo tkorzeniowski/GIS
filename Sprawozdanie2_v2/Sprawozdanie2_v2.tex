@@ -219,13 +219,28 @@ Schemat działania przeszukiwania tabu przestawia algorytm \ref{tabuSearchAlg}. 
 		\State $count$ $\leftarrow$ 0
 		\State $iter$ $\leftarrow$ 0
 		\While{$iter$ $\neq$ MAX-ITER}
-			\State znajdź wszystkich sąsiadów $w$ i wybierz najlepszego z nich: $w'$
-			\State zamień odpowiednie wierzchołki: $w \leftarrow w'$ 
+		
+		\While{istnieje nieodwiedzony sąsiad $w$} %\Comment{znajdź wszystkich sąsiadów drogi $w$}
+		\If{$w'$ ma mniejszą wartość funkcji celu od innych sąsiadów nieobjętych tabu \textbf{LUB} $w'$ spełnia kryterium aspiracji}
+		\State zapamiętaj najlepszego sąsiada $w'$
+		\EndIf
+		\EndWhile
+			%\State znajdź wszystkich sąsiadów drogi $w$: $w'$% i wybierz najlepszego z nich: $w'$
+			%\State zamień odpowiednie wierzchołki: $w \leftarrow w'$ 
+			\State wybierz najlepszego sąsiada: $w \leftarrow w'$ 
+			
+%			\If{$w$ jest lepsza dla danego $tries$}
+%				\State $bestSolverScore \leftarrow w$
+%				\State $count$ $\leftarrow$ 0
+%				\If{$w$ jest najlepsza dla wszystkich $tries$}
+%					\State $bestSolutionScore \leftarrow w$
+					
+%    			\EndIf
 			\State uaktualnij listę tabu: $lt_{ij} \leftarrow iter + 3n$
-			\If{$w$ jest lepsza dla danego $tries$}
+    		\If{$w'$ jest lepszy od $w$ dla danego $tries$}
 				\State $bestSolverScore \leftarrow w$
 				\State $count$ $\leftarrow$ 0
-				\If{$w$ jest najlepsza dla wszystkich $tries$}
+				\If{$w$ jest najlepszy dla wszystkich $tries$}
 					\State $bestSolutionScore \leftarrow w$
 					
     			\EndIf
