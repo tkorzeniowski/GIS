@@ -222,7 +222,8 @@ Schemat działania przeszukiwania tabu przestawia algorytm \ref{tabuSearchAlg}. 
 		
 		\While{istnieje nieodwiedzony sąsiad $w$} %\Comment{znajdź wszystkich sąsiadów drogi $w$}
 		\If{$w'$ ma mniejszą wartość funkcji celu od innych sąsiadów nieobjętych tabu \textbf{LUB} $w'$ spełnia kryterium aspiracji}
-		\State zapamiętaj najlepszego sąsiada $w'$
+		%\State zapamiętaj $w'$ jako najlepszego sąsiada 
+		\State wybierz najlepszego sąsiada: $w \leftarrow w'$
 		\EndIf
 		\EndWhile
 			%\State znajdź wszystkich sąsiadów drogi $w$: $w'$% i wybierz najlepszego z nich: $w'$
@@ -238,14 +239,11 @@ Schemat działania przeszukiwania tabu przestawia algorytm \ref{tabuSearchAlg}. 
 %    			\EndIf
 			\State uaktualnij listę tabu: $lt_{ij} \leftarrow iter + 3n$
     		\If{$w'$ jest lepszy od $w$ dla danego $tries$}
-    			\State wybierz najlepszego sąsiada: $w \leftarrow w'$ 
 				\State $bestSolverScore \leftarrow w$
 				\State $count$ $\leftarrow$ 0
 				\If{$w$ jest najlepszy dla wszystkich $tries$}
 					\State $bestSolutionScore \leftarrow w$
-					
     			\EndIf
-    		
     		\Else
     			\State ++$count$
     		\EndIf
