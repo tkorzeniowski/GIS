@@ -254,7 +254,7 @@ int main(int argc, char* argv[]){
 				//string fn = "dane" + std::to_string(kolumna[liczbaWierzcholkow]) + "_" + std::to_string((int)procent[iProcent])+".txt";
 				resultFile = "wynik" + std::to_string(kolumna[liczbaWierzcholkow]) + "_" + std::to_string((int)procent[iProcent])+".txt";
 
-				readCostMatrix(fn);
+				//readCostMatrix(fn);
 
 				initSolution();
 				ofstream myfile;
