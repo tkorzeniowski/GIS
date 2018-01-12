@@ -65,6 +65,11 @@ string generateData(int n, double percent, int min=0, int max=100){
 	}
 	myfile.close();
 
+	for(int i = 0; i < n; ++i){
+			delete[] cost[i];
+	}
+	delete[] cost;
+
 	return filename;
 }
 
@@ -155,7 +160,6 @@ int* getBestNearbySolution(int it){ // search for neighbours
 			double currentScore = getScore(v_temp);
 
 			// found solution is better and not tabu or the best of all found
-			//if( (bestScore > currentScore && tabu_list[i][j] <= it) || (currentScore < bestSolverScore && currentScore < bestScore)){
 			if( (bestScore > currentScore && tabu_list[i][j] <= it) || currentScore < bestSolverScore){
 				vertexA = i;	// remember best neighbour
 				vertexB = j;
@@ -185,9 +189,6 @@ double solveTSP(int numCandidate){
 
 		for(int i = 0; i < NUM_INTERATION; ++i){
 
-			if(i%100==0) {cout<<i<<" ";}	// for debugging
-			if(i%1000==0) {cout<<endl;}
-
 			v_temp = getBestNearbySolution(i);
 
 			double score = getScore(v_temp);
@@ -209,7 +210,7 @@ double solveTSP(int numCandidate){
 			}else{ // no improvement
 				++countTime;
 				if(countTime > TIME_TRY){
-					cout<<endl<<endl<<"countTime: "<<i<<endl;
+					cout<<"countTime: "<<i<<endl;
 					break;
 				}
 			}
@@ -223,11 +224,11 @@ double solveTSP(int numCandidate){
 
 int main(int argc, char* argv[]){
 	// tabu search for generated costMatrix
-	//string fn = generateData(1000, 90);
-	//readCostMatrix(fn);
+	string fn = generateData(100, 0);
+	readCostMatrix(fn);
 
 	//tabu search for existing file
-	readCostMatrix("dane70_10.txt");
+	//readCostMatrix("dane50_0.txt");
 
 
 	initSolution();
@@ -243,7 +244,7 @@ int main(int argc, char* argv[]){
 	const clock_t begin_time = clock();
 	time(&start);
 
-	double best = solveTSP(1);		// number of tries
+	double best = solveTSP(5);		// number of tries
 
 	time(&end);
 	cout << "Czas wykonania: " << difftime(end,start)<<endl;
