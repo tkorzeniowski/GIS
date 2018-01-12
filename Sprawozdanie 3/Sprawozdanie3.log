@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.11.6)  11 JAN 2018 15:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.11.6)  12 JAN 2018 03:18
 entering extended mode
 **./Sprawozdanie3.tex
 (Sprawozdanie3.tex
@@ -1020,43 +1020,41 @@ een already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.291 
-       [5]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
+       [5]pdfTeX warning (ext4): destination with the same identifier (name{pag
+e.}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.340 P
+       onadto czas zakazu $lt_{ij}$ długości $3n$ jest słuszny dla małyc...
+[6]pdfTeX warning (ext4): destination with the same identifier (name{page.}) ha
+s been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.412 
+       [7]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 449.
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.438 \end{thebibliography}
-                            [6]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 439.
-pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
-een already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.439 \end{document}
-                     [7]pdfTeX warning (ext4): destination with the same identi
-fier (name{page.}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.439 \end{document}
+l.449 \end{document}
                      [8]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 439.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 449.
  (Sprawozdanie3.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 439.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 439.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 449.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 449.
 Package rerunfilecheck Info: File `Sprawozdanie3.out' has not changed.
 (rerunfilecheck)             Checksum: D1D1D41AFDFC780C58BE441BFFFEECF3;783.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 439.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 449.
  ) 
 Here is how much of TeX's memory you used:
  11304 strings out of 493323
- 164423 string characters out of 3140394
- 303023 words of memory out of 3000000
+ 164437 string characters out of 3140394
+ 291023 words of memory out of 3000000
  14611 multiletter control sequences out of 15000+200000
  13419 words of font info for 40 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,11n,43p,989b,445s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,12n,43p,989b,425s stack positions out of 5000i,500n,10000p,200000b,50000s
 {D:/Programy/LaTeX/MiKTeX/fonts/enc/dvips/pl/plit.enc}{D:/Programy/LaTeX/MiKT
 eX/fonts/enc/dvips/pl/plrm.enc}{D:/Programy/LaTeX/MiKTeX/fonts/enc/dvips/pl/plm
 s.enc}{D:/Programy/LaTeX/MiKTeX/fonts/enc/dvips/pl/plme.enc}{D:/Programy/LaTeX/
@@ -1071,9 +1069,9 @@ r17.pfb><D:/Programy/LaTeX/MiKTeX/fonts/type1/public/pl/plr8.pfb><D:/Programy/L
 aTeX/MiKTeX/fonts/type1/public/pl/plsy10.pfb><D:/Programy/LaTeX/MiKTeX/fonts/ty
 pe1/public/pl/plsy8.pfb><D:/Programy/LaTeX/MiKTeX/fonts/type1/public/pl/plti10.
 pfb>
-Output written on Sprawozdanie3.pdf (8 pages, 150756 bytes).
+Output written on Sprawozdanie3.pdf (8 pages, 154906 bytes).
 PDF statistics:
- 177 PDF objects out of 1000 (max. 8388607)
+ 181 PDF objects out of 1000 (max. 8388607)
  30 named destinations out of 1000 (max. 500000)
  115 words of extra memory for PDF output out of 10000 (max. 10000000)
 
